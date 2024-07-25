@@ -205,4 +205,106 @@ for (let i = 0; i < 10; i++) {
 - **Loops**: Repeat a block of code using `for`, `while`, and `do...while`.
 - **Control Flow Statements**: Use `break` to exit loops and `continue` to skip iterations.
 
-Understanding these control flow constructs helps you write more flexible and efficient JavaScript code, allowing you to handle different scenarios and conditions in your programs.
+Exception handling in JavaScript allows you to manage errors gracefully during the execution of your code. Instead of letting your program crash when an error occurs, you can handle exceptions to provide a smoother user experience and debug issues more effectively.
+
+### Basic Concepts
+
+1. **Error Object**: Represents the error that occurred. It contains properties like `name` and `message` that describe the error.
+
+2. **`try...catch` Statement**: Used to handle exceptions by wrapping code that might throw an error in a `try` block and handling the error in a `catch` block.
+
+3. **`finally` Block**: An optional block that executes after the `try` and `catch` blocks, regardless of whether an exception was thrown or not. It’s useful for cleanup code.
+
+4. **Custom Errors**: You can create your own error types by extending the built-in `Error` class.
+
+### Syntax
+
+```javascript
+try {
+  // Code that might throw an error
+} catch (error) {
+  // Code to handle the error
+} finally {
+  // Code that always executes
+}
+```
+
+### Examples
+
+#### Basic Example
+
+```javascript
+try {
+  let result = 10 / 0; // This will throw an error (Infinity), not an exception in JavaScript
+  console.log(result);
+} catch (error) {
+  console.log("An error occurred:", error.message); // Output: An error occurred: Infinity
+} finally {
+  console.log("This always runs."); // Output: This always runs.
+}
+```
+
+#### Throwing Custom Errors
+
+You can throw your own errors using the `throw` statement:
+
+```javascript
+function checkAge(age) {
+  if (age < 0) {
+    throw new Error("Age cannot be negative.");
+  }
+  return "Age is valid.";
+}
+
+try {
+  console.log(checkAge(-5)); // This will throw an error
+} catch (error) {
+  console.log("Error:", error.message); // Output: Error: Age cannot be negative.
+}
+```
+
+#### Creating Custom Error Types
+
+To create more specific error types, extend the `Error` class:
+
+```javascript
+class CustomError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "CustomError";
+  }
+}
+
+function doSomethingRisky() {
+  throw new CustomError("Something went wrong.");
+}
+
+try {
+  doSomethingRisky();
+} catch (error) {
+  if (error instanceof CustomError) {
+    console.log("CustomError caught:", error.message); // Output: CustomError caught: Something went wrong.
+  } else {
+    console.log("Other error caught:", error.message);
+  }
+}
+```
+
+### Common Error Types
+
+JavaScript has several built-in error types:
+
+- **`Error`**: The generic error object.
+- **`SyntaxError`**: Raised for syntax errors.
+- **`ReferenceError`**: Raised for referencing variables that are not declared.
+- **`TypeError`**: Raised for operations on values of the wrong type.
+- **`RangeError`**: Raised when a value is not within the allowed range.
+- **`EvalError`**: Raised when the `eval()` function is used improperly (rarely used).
+
+### Summary
+
+- **`try...catch`**: Used to handle exceptions and errors in your code.
+- **`finally`**: Executes code regardless of whether an exception was thrown.
+- **Custom Errors**: You can throw and handle custom errors to make your error handling more specific and meaningful.
+
+Using exception handling properly helps in making your code robust and easier to debug, ensuring that your application can handle unexpected issues gracefully.
